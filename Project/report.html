@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="attendanceApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendance Report</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body ng-controller="ReportController">
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="index.html">Attendance System</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="base.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="dashboard.html">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" href="attendance.html">Mark Attendance</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="report.html">Reports</a></li>
+                    <li class="nav-item"><a class="nav-link" href="login.html">Login</a></li>
+                    <li class="nav-item"><a class="nav-link" href="logout.html">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <h2 class="text-center">Attendance Report</h2>
+        <table class="table table-bordered mt-4">
+            <thead>
+                <tr>
+                    <th>Student Name</th>
+                    <th>Status</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="attendance in attendances">
+                    <td>{{attendance.username}}</td>
+                    <td>{{attendance.status}}</td>
+                    <td>{{attendance.date}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <footer class="bg-dark text-white text-center py-3 mt-4">
+        <p>&copy; 2024 Attendance Management System. All Rights Reserved.</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // AngularJS Application
+        var app = angular.module('attendanceApp', []);
+
+        // Controller for handling Attendance Report
+        app.controller('ReportController', function($scope, $http) {
+            // Fetch attendance data from backend
+            $http.get('/api/attendance_report').then(function(response) {
+                $scope.attendances = response.data; // Store attendance data in scope
+            }, function(error) {
+                alert("Error fetching attendance report");
+            });
+        });
+    </script>
+
+</body>
+</html>
